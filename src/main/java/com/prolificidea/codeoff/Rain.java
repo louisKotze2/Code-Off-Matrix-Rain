@@ -11,17 +11,18 @@ public class Rain extends JPanel {
     private Drop[] drops;
 
     Rain() {
-        drops = new Drop[Config.SCREEN_SIZE / Config.FONT_SIZE];
+        drops = new Drop[Config.SCREEN_WIDTH / Config.FONT_SIZE];
         for (int i = 0; i < drops.length; i++) {
             drops[i] = new Drop(i * Config.FONT_SIZE);
         }
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        g.fillRect(0, 0, Config.SCREEN_SIZE, Config.SCREEN_SIZE);
-        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        g.setColor(new Color(0, 0, 0));
         Font font = new Font("Monospaced", Font.PLAIN, Config.FONT_SIZE);
         g2.setFont(font);
 
@@ -35,7 +36,7 @@ public class Rain extends JPanel {
         try {
             Thread.sleep(10);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
         }
 
         repaint();

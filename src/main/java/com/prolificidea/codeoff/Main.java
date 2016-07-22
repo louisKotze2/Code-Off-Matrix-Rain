@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Matrix Rain");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(Config.SCREEN_SIZE, Config.SCREEN_SIZE);
+        frame.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         frame.setResizable(false);
         frame.add(new Rain());
         frame.setVisible(true);

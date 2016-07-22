@@ -1,5 +1,6 @@
 package com.prolificidea.codeoff;
 
+import static com.prolificidea.codeoff.Config.*;
 import java.awt.*;
 import java.util.Random;
 
@@ -11,12 +12,12 @@ public class Drop {
 
     Drop(int x) {
         this.x = x;
-        length = getRandomInteger(5, 30);
+        length = getRandomInteger(10, 50); //5, 30
         text = createContent(length);
-        velocity = getRandomInteger(1, 5);
+        velocity = getRandomInteger(3, 10);
         this.y = (-1) * length * Config.FONT_SIZE;
     }
-
+    
     protected char[][] createContent(int length) {
         char[][] result = new char[length][1];
         for (int i = 0; i < result.length; i++) {
@@ -30,15 +31,25 @@ public class Drop {
         for (int i = 0; i < length; i++) {
             if (getRandomInteger(0, length) == i)
                 text[i][0] = getRandomCharacter();
-            if (i == length - 1)
-                g2.setColor(new Color(253, 104, 25));
-            else
-                g2.setColor(new Color(66, 198, 255));
+            if (i == length - 1) //first char
+                g2.setColor(COLOR_START);
+            else if (isStageOne())
+                g2.setColor(COLOR_STAGE_ONE);
+            else if (isStageTwo())
+                g2.setColor(COLOR_STAGE_TWO);
+            else if (isStageThree())
+                g2.setColor(COLOR_STAGE_THREE);
+            else if (isStageFour())
+                g2.setColor(COLOR_STAGE_FOUR);
+            else if (isStageFive())
+                g2.setColor(COLOR_STAGE_FIVE);
+            else //string
+                g2.setColor(COLOR_DEFAULT);
             g2.drawChars(text[i], 0, 1, x, y + (i * fontSize));
         }
         y += velocity;
     }
-
+    
     public char getRandomCharacter() {
         return (char) (rng.nextInt(26) + 'a');
     }
@@ -49,46 +60,26 @@ public class Drop {
     }
 
     public boolean isOffScreen() {
-        return (y > Config.SCREEN_SIZE);
+        return (y > SCREEN_HEIGHT);
     }
 
-    /*public int getVelocity() {
-        return velocity;
+    private boolean isStageOne() {
+        return (y < 0);
     }
 
-    public void setVelocity(int velocity) {
-        this.velocity = velocity;
+    private boolean isStageTwo() {
+        return (y > 0 && y < 200);
     }
 
-    public int getLength() {
-        return length;
+    private boolean isStageThree() {
+        return (y > 200 && y < 400);
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    private boolean isStageFour() {
+        return (y > 400 && y < 600);
     }
 
-    public int getX() {
-        return x;
+    private boolean isStageFive() {
+        return (y > 600 && y < 800);
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public char[][] getText() {
-        return text;
-    }
-
-    public void setText(char[][] text) {
-        this.text = text;
-    }*/
 }
